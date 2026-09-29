@@ -68,6 +68,8 @@ export interface VersionPRData {
  * Options for creating/updating Version PR
  */
 export interface VersionPROptions {
+  /** Exact repository-relative paths owned by versioning */
+  files: string[];
   /** Branch name for the PR */
   branch: string;
   /** PR title */

@@ -30,7 +30,7 @@ function getInputs(): ActionInputs {
     anthropicApiKey: core.getInput('anthropic-api-key') || undefined,
     failOnBreaking: core.getInput('fail-on-breaking') === 'true',
     autoChangeset: core.getInput('auto-changeset') === 'true',
-    versionPrTitle: core.getInput('version-pr-title') || 'Version Contracts',
+    versionPrTitle: core.getInput('version-pr-title') || 'chore: version contracts',
     versionPrBranch: core.getInput('version-pr-branch') || 'contractual/version-contracts',
     baseBranch: core.getInput('base-branch') || undefined,
     preReleaseTag: core.getInput('pre-release-tag') || undefined,

@@ -6,7 +6,6 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import * as exec from '@actions/exec';
 import { readFileSync } from 'node:fs';
-import { basename } from 'node:path';
 import type { TagPrefix } from '../types.js';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
@@ -77,7 +76,7 @@ export function isPrerelease(version: string): boolean {
  * @param tagName - The tag name to create
  * @param message - Tag message
  */
-export async function createGitTag(tagName: string, message: string): Promise<void> {
+export async function createGitTag(tagName: string, message: string, sha: string): Promise<void> {
   core.info(`Creating git tag: ${tagName}`);
 
   // Configure git identity for tag creation
@@ -85,7 +84,7 @@ export async function createGitTag(tagName: string, message: string): Promise<vo
   await exec.exec('git', ['config', 'user.email', 'contractual[bot]@users.noreply.github.com']);
 
   // Create annotated tag
-  await exec.exec('git', ['tag', '-a', tagName, '-m', message]);
+  await exec.exec('git', ['tag', '-a', tagName, sha, '-m', message]);
 
   // Push tag to remote
   await exec.exec('git', ['push', 'origin', tagName]);
@@ -106,6 +105,14 @@ export async function createRelease(
   context: typeof github.context,
   options: ReleaseOptions
 ): Promise<ReleaseResult> {
+  try {
+    const { data: existing } = await octokit.rest.repos.getReleaseByTag({
+      owner: context.repo.owner, repo: context.repo.repo, tag: options.tagName,
+    });
+    return { id: existing.id, url: existing.html_url };
+  } catch (error) {
+    if ((error as { status?: number }).status !== 404) throw error;
+  }
   core.info(`Creating GitHub Release: ${options.releaseName}`);
 
   const { data: release } = await octokit.rest.repos.createRelease({
@@ -140,6 +147,11 @@ export async function uploadReleaseAsset(
   asset: AssetInfo
 ): Promise<void> {
   core.info(`Uploading asset: ${asset.name}`);
+
+  const existing = await octokit.paginate(octokit.rest.repos.listReleaseAssets, {
+    owner: context.repo.owner, repo: context.repo.repo, release_id: releaseId, per_page: 100,
+  });
+  if (existing.some(item => item.name === asset.name)) return;
 
   const fileContent = readFileSync(asset.path);
 
@@ -176,6 +188,7 @@ export async function tagExists(
     return true;
   } catch (error) {
     // 404 means tag doesn't exist
-    return false;
+    if ((error as { status?: number }).status === 404) return false;
+    throw error;
   }
 }

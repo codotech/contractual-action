@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { existsSync, readFileSync, unlinkSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { existsSync, unlinkSync } from 'node:fs';
+import { join, extname, relative } from 'node:path';
 import {
   loadConfig,
   readChangesets,
@@ -30,9 +30,6 @@ import { renderReleaseNotes } from '../render/release-notes.js';
 import { extractChangelogSection } from '../lib/changelog.js';
 import type { ActionInputs, ChangesetFile, ResolvedConfig } from '../types.js';
 
-/** Full path to changesets directory */
-const CHANGESETS_PATH = '.contractual/changesets';
-
 /**
  * Run the release workflow:
  * - If changesets exist: run version, create/update Version PR
@@ -42,18 +39,27 @@ export async function runRelease(inputs: ActionInputs): Promise<void> {
   const octokit = github.getOctokit(inputs.githubToken);
   const context = github.context;
 
+  const baseBranch = inputs.baseBranch || context.payload.repository?.default_branch || 'next';
+  if (!['push', 'workflow_dispatch'].includes(context.eventName) || context.ref !== `refs/heads/${baseBranch}`) {
+    throw new Error(`Release mode must run on a push or manual run on ${baseBranch}.`);
+  }
+
   core.info('Loading contractual config...');
   const config = loadConfig(); // sync function
+  if (config.versioning?.mode === 'fixed') throw new Error('Fixed versioning is not implemented. Use independent versioning.');
+  if (inputs.tagPrefix !== 'contract' && config.contracts.length > 1) {
+    throw new Error('Multiple contracts require tag-prefix: contract to avoid tag collisions.');
+  }
 
   core.info('Reading changesets...');
-  const changesets = await readChangesets(CHANGESETS_PATH); // async - must await!
+  const changesets = await readChangesets(join(config.configDir, '.contractual/changesets'));
 
   if (changesets.length > 0) {
     core.info(`Found ${changesets.length} changeset(s). Running version workflow...`);
     await handleVersioning(octokit, context, config, changesets, inputs);
   } else {
     core.info('No changesets found. Checking if this is a version merge...');
-    const versionMergeInfo = await checkIfVersionMerge(octokit, context);
+    const versionMergeInfo = await checkIfVersionMerge(octokit, context, config);
     if (versionMergeInfo) {
       core.info('Version merge detected. Running post-release...');
       await handlePostRelease(octokit, context, config, versionMergeInfo, inputs);
@@ -80,6 +86,8 @@ async function handleVersioning(
 
   // Aggregate bumps (highest wins per contract)
   const aggregatedBumps = aggregateBumps(changesets);
+  const unknown = Object.keys(aggregatedBumps).filter(name => !config.contracts.some(c => c.name === name));
+  if (unknown.length) throw new Error(`Unknown contracts in changesets: ${unknown.join(', ')}. No changesets were consumed.`);
 
   // Initialize version manager
   const versionManager = new VersionManager(contractualDir);
@@ -135,27 +143,16 @@ async function handleVersioning(
 
   // Append to CHANGELOG.md
   const changelogPath = join(config.configDir, 'CHANGELOG.md');
-  try {
-    appendChangelog(changelogPath, bumpResults);
-    core.info('Updated CHANGELOG.md');
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    core.warning(`Failed to update changelog: ${message}`);
-  }
+  appendChangelog(changelogPath, bumpResults);
+  core.info('Updated CHANGELOG.md');
 
   // Delete consumed changeset files
   const changesetsDir = join(contractualDir, CHANGESETS_DIR);
   for (const changeset of changesets) {
     const changesetPath = join(changesetsDir, changeset.filename);
-    try {
-      if (existsSync(changesetPath)) {
-        unlinkSync(changesetPath);
-        consumedChangesets.push(changeset.filename);
-        core.debug(`Deleted changeset: ${changeset.filename}`);
-      }
-    } catch {
-      core.debug(`Failed to delete changeset: ${changeset.filename}`);
-    }
+    unlinkSync(changesetPath);
+    consumedChangesets.push(changeset.filename);
+    core.debug(`Deleted changeset: ${changeset.filename}`);
   }
 
   // Set bumped-versions output
@@ -177,6 +174,9 @@ async function handleVersioning(
       title: inputs.versionPrTitle,
       body: prBody,
       baseBranch: inputs.baseBranch,
+      files: [contractualDir, changelogPath, ...config.contracts.map(c => c.absolutePath)]
+        .filter(path => existsSync(path))
+        .map(path => relative(process.cwd(), path)),
     });
 
     core.setOutput('version-pr-url', prUrl);
@@ -218,29 +218,29 @@ async function handlePostRelease(
   const versionManager = new VersionManager(contractualDir);
   const createdTags: string[] = [];
   const releaseUrls: string[] = [];
+  const failures: string[] = [];
 
   for (const bump of mergeInfo.bumps) {
     const { contract: contractName, oldVersion, newVersion } = bump;
 
     // Find contract config
     const contract = config.contracts.find((c) => c.name === contractName);
+    if (!contract) throw new Error(`Cannot release unknown contract: ${contractName}`);
 
     // Format tag name
     const tagName = formatTag(contractName, newVersion, inputs.tagPrefix);
 
     // Check if tag already exists (idempotency)
-    if (await tagExists(octokit, context, tagName)) {
-      core.info(`Tag ${tagName} already exists, skipping...`);
-      continue;
-    }
-
     // Create git tag
     try {
-      await createGitTag(tagName, `Release ${contractName} ${newVersion}`);
-      createdTags.push(tagName);
+      if (!(await tagExists(octokit, context, tagName))) {
+        await createGitTag(tagName, `Release ${contractName} ${newVersion}`, context.sha);
+        createdTags.push(tagName);
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       core.warning(`Failed to create tag ${tagName}: ${message}`);
+      failures.push(`${tagName}: ${message}`);
       continue;
     }
 
@@ -248,7 +248,7 @@ async function handlePostRelease(
     if (inputs.createReleases) {
       try {
         // Extract changelog section for this version
-        const changes = extractChangelogSection(contractName, newVersion);
+        const changes = extractChangelogSection(contractName, newVersion, join(config.configDir, 'CHANGELOG.md'));
 
         const releaseNotes = renderReleaseNotes({
           contractName,
@@ -270,6 +270,9 @@ async function handlePostRelease(
         // Attach spec file as asset
         if (inputs.attachSpecs && contract) {
           const snapshotPath = versionManager.getSnapshotPath(contractName);
+          if (!snapshotPath || !existsSync(snapshotPath)) {
+            throw new Error(`Missing release snapshot for ${contractName}`);
+          }
           if (snapshotPath && existsSync(snapshotPath)) {
             const ext = extname(snapshotPath);
             const assetName = `${contractName}-${newVersion}${ext}`;
@@ -283,12 +286,14 @@ async function handlePostRelease(
             } catch (error) {
               const message = error instanceof Error ? error.message : 'Unknown error';
               core.warning(`Failed to attach spec ${assetName}: ${message}`);
+              failures.push(`${assetName}: ${message}`);
             }
           }
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
         core.warning(`Failed to create release for ${tagName}: ${message}`);
+        failures.push(`${tagName}: ${message}`);
       }
     }
   }
@@ -296,6 +301,7 @@ async function handlePostRelease(
   // Set outputs
   core.setOutput('created-tags', JSON.stringify(createdTags));
   core.setOutput('release-urls', JSON.stringify(releaseUrls));
+  if (failures.length) throw new Error(`Release incomplete; rerun to resume: ${failures.join('; ')}`);
 
   core.info(`Created ${createdTags.length} tag(s) and ${releaseUrls.length} release(s)`);
 }
@@ -318,8 +324,10 @@ function detectBumpType(oldVersion: string, newVersion: string): 'major' | 'mino
  */
 async function checkIfVersionMerge(
   octokit: ReturnType<typeof github.getOctokit>,
-  context: typeof github.context
+  context: typeof github.context,
+  config: ResolvedConfig
 ): Promise<VersionMergeInfo | null> {
+  const versionsPath = relative(process.cwd(), join(config.configDir, '.contractual/versions.json')).replaceAll('\\', '/');
   try {
     const { data: commit } = await octokit.rest.repos.getCommit({
       owner: context.repo.owner,
@@ -327,21 +335,13 @@ async function checkIfVersionMerge(
       ref: context.sha,
     });
 
-    const versionsFile = commit.files?.find(
-      (f) => f.filename === '.contractual/versions.json'
-    );
-
-    if (!versionsFile) {
-      return null;
-    }
-
-    core.debug('Commit modifies versions.json - detected as version merge');
+    // Compare contents directly: commit.files is paginated and may omit versions.json.
 
     // Get the current versions.json content
     const { data: currentContent } = await octokit.rest.repos.getContent({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      path: '.contractual/versions.json',
+      path: versionsPath,
       ref: context.sha,
     });
 
@@ -354,7 +354,7 @@ async function checkIfVersionMerge(
         const { data: previousContent } = await octokit.rest.repos.getContent({
           owner: context.repo.owner,
           repo: context.repo.repo,
-          path: '.contractual/versions.json',
+          path: versionsPath,
           ref: parentSha,
         });
 
@@ -362,7 +362,8 @@ async function checkIfVersionMerge(
           const decoded = Buffer.from(previousContent.content, 'base64').toString('utf-8');
           previousVersions = JSON.parse(decoded);
         }
-      } catch {
+      } catch (error) {
+        if ((error as { status?: number }).status !== 404) throw error;
         // Parent might not have versions.json (first version)
         core.debug('Could not read parent versions.json - assuming first release');
       }
@@ -400,7 +401,7 @@ async function checkIfVersionMerge(
     return { bumps };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    core.warning(`Failed to check if version merge: ${message}`);
-    return null;
+    if ((error as { status?: number }).status === 404) return null;
+    throw new Error(`Failed to check if version merge: ${message}`);
   }
 }

@@ -35384,15 +35384,15 @@ var require_pattern = __commonJS({
     exports$1.removeDuplicateSlashes = removeDuplicateSlashes;
     function partitionAbsoluteAndRelative(patterns) {
       const absolute = [];
-      const relative2 = [];
+      const relative4 = [];
       for (const pattern of patterns) {
         if (isAbsolute(pattern)) {
           absolute.push(pattern);
         } else {
-          relative2.push(pattern);
+          relative4.push(pattern);
         }
       }
-      return [absolute, relative2];
+      return [absolute, relative4];
     }
     __name(partitionAbsoluteAndRelative, "partitionAbsoluteAndRelative");
     exports$1.partitionAbsoluteAndRelative = partitionAbsoluteAndRelative;
@@ -41620,49 +41620,49 @@ var require_fast_uri = __commonJS({
       return serialize(resolved, schemelessOptions);
     }
     __name(resolve4, "resolve");
-    function resolveComponent(base, relative2, options, skipNormalization) {
+    function resolveComponent(base, relative4, options, skipNormalization) {
       const target = {};
       if (!skipNormalization) {
         base = parse2(serialize(base, options), options);
-        relative2 = parse2(serialize(relative2, options), options);
+        relative4 = parse2(serialize(relative4, options), options);
       }
       options = options || {};
-      if (!options.tolerant && relative2.scheme) {
-        target.scheme = relative2.scheme;
-        target.userinfo = relative2.userinfo;
-        target.host = relative2.host;
-        target.port = relative2.port;
-        target.path = removeDotSegments(relative2.path || "");
-        target.query = relative2.query;
+      if (!options.tolerant && relative4.scheme) {
+        target.scheme = relative4.scheme;
+        target.userinfo = relative4.userinfo;
+        target.host = relative4.host;
+        target.port = relative4.port;
+        target.path = removeDotSegments(relative4.path || "");
+        target.query = relative4.query;
       } else {
-        if (relative2.userinfo !== void 0 || relative2.host !== void 0 || relative2.port !== void 0) {
-          target.userinfo = relative2.userinfo;
-          target.host = relative2.host;
-          target.port = relative2.port;
-          target.path = removeDotSegments(relative2.path || "");
-          target.query = relative2.query;
+        if (relative4.userinfo !== void 0 || relative4.host !== void 0 || relative4.port !== void 0) {
+          target.userinfo = relative4.userinfo;
+          target.host = relative4.host;
+          target.port = relative4.port;
+          target.path = removeDotSegments(relative4.path || "");
+          target.query = relative4.query;
         } else {
-          if (!relative2.path) {
+          if (!relative4.path) {
             target.path = base.path;
-            if (relative2.query !== void 0) {
-              target.query = relative2.query;
+            if (relative4.query !== void 0) {
+              target.query = relative4.query;
             } else {
               target.query = base.query;
             }
           } else {
-            if (relative2.path[0] === "/") {
-              target.path = removeDotSegments(relative2.path);
+            if (relative4.path[0] === "/") {
+              target.path = removeDotSegments(relative4.path);
             } else {
               if ((base.userinfo !== void 0 || base.host !== void 0 || base.port !== void 0) && !base.path) {
-                target.path = "/" + relative2.path;
+                target.path = "/" + relative4.path;
               } else if (!base.path) {
-                target.path = relative2.path;
+                target.path = relative4.path;
               } else {
-                target.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative2.path;
+                target.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative4.path;
               }
               target.path = removeDotSegments(target.path);
             }
-            target.query = relative2.query;
+            target.query = relative4.query;
           }
           target.userinfo = base.userinfo;
           target.host = base.host;
@@ -41670,7 +41670,7 @@ var require_fast_uri = __commonJS({
         }
         target.scheme = base.scheme;
       }
-      target.fragment = relative2.fragment;
+      target.fragment = relative4.fragment;
       return target;
     }
     __name(resolveComponent, "resolveComponent");
@@ -59895,49 +59895,49 @@ var require_Resolve = __commonJS({
     }
     __name(resolve4, "resolve");
     exports$1.resolve = resolve4;
-    function resolveComponents(base, relative2, options, skipNormalization) {
+    function resolveComponents(base, relative4, options, skipNormalization) {
       const target = {};
       if (!skipNormalization) {
         base = (0, Parse_1.parse)((0, Serialize_1.serialize)(base));
-        relative2 = (0, Parse_1.parse)((0, Serialize_1.serialize)(relative2));
+        relative4 = (0, Parse_1.parse)((0, Serialize_1.serialize)(relative4));
       }
       options = options || {};
-      if (!options.tolerant && relative2.scheme) {
-        target.scheme = relative2.scheme;
-        target.userinfo = relative2.userinfo;
-        target.host = relative2.host;
-        target.port = relative2.port;
-        target.path = removeDotSegments(relative2.path || "");
-        target.query = relative2.query;
+      if (!options.tolerant && relative4.scheme) {
+        target.scheme = relative4.scheme;
+        target.userinfo = relative4.userinfo;
+        target.host = relative4.host;
+        target.port = relative4.port;
+        target.path = removeDotSegments(relative4.path || "");
+        target.query = relative4.query;
       } else {
-        if (relative2.userinfo !== void 0 || relative2.host !== void 0 || relative2.port !== void 0) {
-          target.userinfo = relative2.userinfo;
-          target.host = relative2.host;
-          target.port = relative2.port;
-          target.path = removeDotSegments(relative2.path || "");
-          target.query = relative2.query;
+        if (relative4.userinfo !== void 0 || relative4.host !== void 0 || relative4.port !== void 0) {
+          target.userinfo = relative4.userinfo;
+          target.host = relative4.host;
+          target.port = relative4.port;
+          target.path = removeDotSegments(relative4.path || "");
+          target.query = relative4.query;
         } else {
-          if (!relative2.path) {
+          if (!relative4.path) {
             target.path = base.path;
-            if (relative2.query !== void 0) {
-              target.query = relative2.query;
+            if (relative4.query !== void 0) {
+              target.query = relative4.query;
             } else {
               target.query = base.query;
             }
           } else {
-            if (relative2.path.charAt(0) === "/") {
-              target.path = removeDotSegments(relative2.path);
+            if (relative4.path.charAt(0) === "/") {
+              target.path = removeDotSegments(relative4.path);
             } else {
               if ((base.userinfo !== void 0 || base.host !== void 0 || base.port !== void 0) && !base.path) {
-                target.path = "/" + relative2.path;
+                target.path = "/" + relative4.path;
               } else if (!base.path) {
-                target.path = relative2.path;
+                target.path = relative4.path;
               } else {
-                target.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative2.path;
+                target.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative4.path;
               }
               target.path = removeDotSegments(target.path);
             }
-            target.query = relative2.query;
+            target.query = relative4.query;
           }
           target.userinfo = base.userinfo;
           target.host = base.host;
@@ -59945,7 +59945,7 @@ var require_Resolve = __commonJS({
         }
         target.scheme = base.scheme;
       }
-      target.fragment = relative2.fragment;
+      target.fragment = relative4.fragment;
       return target;
     }
     __name(resolveComponents, "resolveComponents");
@@ -82392,7 +82392,7 @@ registerAllEngines();
 // node_modules/.pnpm/@contractual+cli@0.1.0-dev.7_@types+node@20.19.39/node_modules/@contractual/cli/dist/utils/files.js
 __toESM(require_dist(), 1);
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/changesets/naming.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/changesets/naming.js
 var ADJECTIVES = [
   "brave",
   "calm",
@@ -82476,7 +82476,7 @@ function generateChangesetName() {
 }
 __name(generateChangesetName, "generateChangesetName");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/changesets/create.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/changesets/create.js
 var SEVERITY_LABELS = {
   breaking: "BREAKING",
   "non-breaking": "minor",
@@ -82533,7 +82533,7 @@ ${body}
 }
 __name(createChangeset, "createChangeset");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/changesets/read.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/changesets/read.js
 var import_yaml2 = __toESM(require_dist(), 1);
 var VALID_BUMP_TYPES = ["major", "minor", "patch"];
 var ChangesetParseError = class extends Error {
@@ -82612,7 +82612,7 @@ async function readChangesets(changesetsDir) {
 }
 __name(readChangesets, "readChangesets");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/changesets/consume.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/changesets/consume.js
 var BUMP_PRIORITY = {
   major: 3,
   minor: 2,
@@ -82672,7 +82672,7 @@ function escapeRegex(str) {
 }
 __name(escapeRegex, "escapeRegex");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/versioning/manager.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/versioning/manager.js
 var semver = __toESM(require_semver2(), 1);
 var DEFAULT_VERSION = "0.0.0";
 var SPEC_EXTENSIONS = [".yaml", ".yml", ".json"];
@@ -82921,7 +82921,7 @@ ${existingContent}`;
 }
 __name(appendChangelog, "appendChangelog");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5/node_modules/@contractual/changesets/dist/versioning/spec-updater.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-dev.5_patch_hash=fff61b77777aa3a4f2549957fe8013f1d463b7d61455584dcae8c6afd0791a47/node_modules/@contractual/changesets/dist/versioning/spec-updater.js
 var import_yaml3 = __toESM(require_dist(), 1);
 var VERSION_FIELD_PATHS = {
   openapi: ["info", "version"],
@@ -82955,11 +82955,43 @@ function updateJsonSpec(specPath, fieldPath, newVersion) {
   fs.writeFileSync(specPath, JSON.stringify(spec, null, indent) + trailingNewline, "utf-8");
 }
 __name(updateJsonSpec, "updateJsonSpec");
+function renderScalar(value, originalType) {
+  if (originalType === "QUOTE_DOUBLE") {
+    return JSON.stringify(value);
+  }
+  if (originalType === "QUOTE_SINGLE") {
+    return `'${value.replace(/'/g, "''")}'`;
+  }
+  return /^[\w.-]+$/.test(value) && !/^[+-]?(\d|\.\d|true|false|null|~)/i.test(value) ? value : JSON.stringify(value);
+}
+__name(renderScalar, "renderScalar");
+function spliceScalarInPlace(specPath, content, doc, fieldPath, newVersion) {
+  const node = doc.getIn([...fieldPath], true);
+  if (!node?.range) {
+    return false;
+  }
+  const [start, valueEnd] = node.range;
+  const replacement = renderScalar(newVersion, node.type);
+  const updated = content.slice(0, start) + replacement + content.slice(valueEnd);
+  fs.writeFileSync(specPath, updated, "utf-8");
+  return true;
+}
+__name(spliceScalarInPlace, "spliceScalarInPlace");
 function updateYamlSpec(specPath, fieldPath, newVersion) {
   const content = fs.readFileSync(specPath, "utf-8");
   const doc = (0, import_yaml3.parseDocument)(content);
-  doc.setIn([...fieldPath], newVersion);
-  fs.writeFileSync(specPath, doc.toString(), "utf-8");
+  if (doc.errors.length === 0) {
+    doc.setIn([...fieldPath], newVersion);
+    fs.writeFileSync(specPath, doc.toString(), "utf-8");
+    return;
+  }
+  const first = doc.errors[0];
+  const where = first.linePos?.[0] ? ` (e.g. ${first.code} at line ${first.linePos[0].line})` : "";
+  if (spliceScalarInPlace(specPath, content, doc, fieldPath, newVersion)) {
+    console.warn(`Spec "${specPath}" has YAML parse issues${where}; synced "${fieldPath.join(".")}" via in-place edit. Consider fixing the spec.`);
+    return;
+  }
+  console.warn(`Skipped version sync for "${specPath}": the file has YAML parse errors${where} and "${fieldPath.join(".")}" could not be located. The version field was not changed.`);
 }
 __name(updateYamlSpec, "updateYamlSpec");
 function updateSpecVersion(specPath, newVersion, contractType) {
@@ -83316,14 +83348,23 @@ async function runPRCheck(inputs) {
   core2.info(`Breaking detection complete: ${hasBreaking ? "breaking changes found" : "no breaking changes"}`);
   core2.info("Checking for existing changeset...");
   const prFiles = await getPRFiles(octokit, context3, prNumber);
-  const hasChangeset = prFiles.some(
-    (f) => f.filename.startsWith(".contractual/changesets/") && f.filename.endsWith(".md")
+  const changesetsDir = path.join(config.configDir, ".contractual/changesets");
+  const changedPaths = new Set(prFiles.filter((f) => f.status !== "removed").map((f) => f.filename));
+  const changesets = (await readChangesets(changesetsDir)).filter(
+    (cs) => changedPaths.has(path.relative(process.cwd(), path.join(changesetsDir, cs.filename)).replaceAll("\\", "/"))
   );
+  const bumps = aggregateBumps(changesets);
+  const unknownContracts = Object.keys(bumps).filter((name) => !config.contracts.some((c) => c.name === name));
+  if (unknownContracts.length) throw new Error(`Changesets reference unknown contracts: ${unknownContracts.join(", ")}`);
+  const priorities = { none: 0, patch: 1, minor: 2, major: 3 };
+  const uncovered = diffResults.filter((result) => result.changes.length > 0 && priorities[bumps[result.contract] || "none"] < priorities[result.suggestedBump]);
+  const hasChangeset = hasChanges && uncovered.length === 0;
   let changesetCreated = false;
-  if (hasChanges && !hasChangeset && inputs.autoChangeset) {
+  const isFork = context3.payload.pull_request?.head.repo?.full_name !== context3.payload.repository?.full_name;
+  if (hasChanges && !hasChangeset && inputs.autoChangeset && !isFork) {
     core2.info("Auto-generating changeset...");
     try {
-      const changesetFile = generateChangeset(diffResults);
+      const changesetFile = generateChangeset(uncovered);
       if (changesetFile) {
         await commitChangeset(changesetFile);
         changesetCreated = true;
@@ -83357,6 +83398,10 @@ async function runPRCheck(inputs) {
     core2.setFailed("Lint errors found. Review the PR comment for details.");
     return;
   }
+  if (hasChanges && !hasChangeset && !changesetCreated && config.changeset?.requireOnPR !== false) {
+    core2.setFailed("A changeset covering every changed contract with a sufficient version bump is required.");
+    return;
+  }
   if (hasBreaking && inputs.failOnBreaking) {
     core2.setFailed("Breaking changes detected. Review the PR comment for details.");
   }
@@ -83372,8 +83417,7 @@ async function runLint(config) {
     try {
       const linter = getLinter(contract.type, contract.lint);
       if (!linter) {
-        core2.debug(`No linter available for ${contract.name} (type: ${contract.type})`);
-        continue;
+        throw new Error(`No linter available for ${contract.type}. Configure a custom lint command or set lint: false.`);
       }
       const result = await linter(contract.absolutePath);
       results.push({
@@ -83384,6 +83428,7 @@ async function runLint(config) {
       const message = error2 instanceof Error ? error2.message : "Linter failed";
       results.push({
         contract: contract.name,
+        specPath: contract.absolutePath,
         errors: [{ path: "", message, severity: "error" }],
         warnings: []
       });
@@ -83393,16 +83438,13 @@ async function runLint(config) {
 }
 __name(runLint, "runLint");
 async function runDiff(config) {
-  try {
-    const { results } = await diffContracts(config, { includeEmpty: false });
-    return results;
-  } catch (error2) {
-    if (error2 instanceof Error && error2.message.includes("No .contractual directory")) {
-      core2.warning("No .contractual directory found - skipping diff");
-      return [];
+  for (const contract of config.contracts) {
+    if (contract.breaking !== false && !getDiffer(contract.type, contract.breaking)) {
+      throw new Error(`No differ available for ${contract.type}. Configure a custom breaking command or set breaking: false.`);
     }
-    throw error2;
   }
+  const { results } = await diffContracts(config, { includeEmpty: false });
+  return results;
 }
 __name(runDiff, "runDiff");
 function generateChangeset(diffResults) {
@@ -83414,12 +83456,12 @@ function generateChangeset(diffResults) {
 }
 __name(generateChangeset, "generateChangeset");
 async function getPRFiles(octokit, context3, prNumber) {
-  const { data: files } = await octokit.rest.pulls.listFiles({
+  return await octokit.paginate(octokit.rest.pulls.listFiles, {
     owner: context3.repo.owner,
     repo: context3.repo.repo,
-    pull_number: prNumber
+    pull_number: prNumber,
+    per_page: 100
   });
-  return files;
 }
 __name(getPRFiles, "getPRFiles");
 
@@ -83433,20 +83475,20 @@ var GIT_OPTIONS2 = {
   encoding: "utf-8",
   stdio: ["pipe", "pipe", "pipe"]
 };
-function git2(command) {
+function git2(...args) {
   try {
-    const result = child.execSync(`git ${command}`, GIT_OPTIONS2);
+    const result = child.execFileSync("git", args, GIT_OPTIONS2);
     return typeof result === "string" ? result.trim() : "";
   } catch (error2) {
     const message = error2 instanceof Error ? error2.message : "Unknown error";
-    throw new Error(`Git command failed: git ${command}
+    throw new Error(`Git command failed: git ${args.join(" ")}
 ${message}`);
   }
 }
 __name(git2, "git");
 function hasStagedChanges() {
   try {
-    const result = git2("diff --cached --quiet");
+    git2("diff", "--cached", "--quiet");
     return false;
   } catch {
     return true;
@@ -83457,21 +83499,20 @@ async function createOrUpdateVersionPR(octokit, context3, options) {
   const { owner, repo } = context3.repo;
   const baseBranch = options.baseBranch || getDefaultBranch(context3);
   core3.debug(`Base branch: ${baseBranch}, Version branch: ${options.branch}`);
-  await ensureBranchExists(octokit, owner, repo, options.branch, baseBranch);
-  git2(`fetch origin ${options.branch}`);
-  git2(`checkout -B ${options.branch}`);
-  try {
-    git2(`merge origin/${options.branch} --no-edit`);
-  } catch {
-    core3.debug("No remote changes to merge or merge conflict (will be resolved by push)");
-  }
-  git2('config user.name "contractual[bot]"');
-  git2('config user.email "contractual[bot]@users.noreply.github.com"');
-  git2("add -A");
+  if (options.branch === baseBranch) throw new Error("The version PR branch must differ from the base branch.");
+  if (hasStagedChanges()) throw new Error("The index must be clean before creating a version PR.");
+  if (!options.files.length) throw new Error("No version files were supplied.");
+  git2("check-ref-format", "--branch", options.branch);
+  const remoteRef = `refs/heads/${options.branch}`;
+  const previousSha = git2("ls-remote", "origin", remoteRef).split(/\s/)[0] || "";
+  git2("checkout", "-B", options.branch);
+  git2("config", "user.name", "contractual[bot]");
+  git2("config", "user.email", "contractual[bot]@users.noreply.github.com");
+  git2("add", "-A", "--", ...options.files);
   if (hasStagedChanges()) {
-    git2('commit -m "chore: version contracts"');
+    git2("commit", "-m", "chore: version contracts");
     core3.debug("Committed version changes");
-    git2(`push origin ${options.branch}`);
+    git2("push", `--force-with-lease=${remoteRef}:${previousSha}`, "origin", `HEAD:${remoteRef}`);
     core3.debug("Pushed changes");
   } else {
     core3.info("No changes to commit");
@@ -83484,29 +83525,9 @@ function getDefaultBranch(context3) {
   if (typeof branch === "string" && branch.length > 0) {
     return branch;
   }
-  return "main";
+  return "next";
 }
 __name(getDefaultBranch, "getDefaultBranch");
-async function ensureBranchExists(octokit, owner, repo, branch, baseBranch) {
-  try {
-    await octokit.rest.repos.getBranch({ owner, repo, branch });
-    core3.debug(`Branch ${branch} exists`);
-  } catch {
-    core3.info(`Creating branch: ${branch}`);
-    const { data: ref } = await octokit.rest.git.getRef({
-      owner,
-      repo,
-      ref: `heads/${baseBranch}`
-    });
-    await octokit.rest.git.createRef({
-      owner,
-      repo,
-      ref: `refs/heads/${branch}`,
-      sha: ref.object.sha
-    });
-  }
-}
-__name(ensureBranchExists, "ensureBranchExists");
 async function findOrCreatePR(octokit, owner, repo, options, baseBranch) {
   const { data: prs } = await octokit.rest.pulls.list({
     owner,
@@ -83521,7 +83542,8 @@ async function findOrCreatePR(octokit, owner, repo, options, baseBranch) {
       owner,
       repo,
       pull_number: pr2.number,
-      body: options.body
+      body: options.body,
+      title: options.title
     });
     core3.info(`Updated existing PR #${pr2.number}`);
     return pr2.html_url;
@@ -84287,16 +84309,26 @@ function isPrerelease(version) {
   return version.includes("-");
 }
 __name(isPrerelease, "isPrerelease");
-async function createGitTag(tagName, message) {
+async function createGitTag(tagName, message, sha) {
   core4.info(`Creating git tag: ${tagName}`);
   await exec("git", ["config", "user.name", "contractual[bot]"]);
   await exec("git", ["config", "user.email", "contractual[bot]@users.noreply.github.com"]);
-  await exec("git", ["tag", "-a", tagName, "-m", message]);
+  await exec("git", ["tag", "-a", tagName, sha, "-m", message]);
   await exec("git", ["push", "origin", tagName]);
   core4.info(`Tag ${tagName} created and pushed`);
 }
 __name(createGitTag, "createGitTag");
 async function createRelease(octokit, context3, options) {
+  try {
+    const { data: existing } = await octokit.rest.repos.getReleaseByTag({
+      owner: context3.repo.owner,
+      repo: context3.repo.repo,
+      tag: options.tagName
+    });
+    return { id: existing.id, url: existing.html_url };
+  } catch (error2) {
+    if (error2.status !== 404) throw error2;
+  }
   core4.info(`Creating GitHub Release: ${options.releaseName}`);
   const { data: release } = await octokit.rest.repos.createRelease({
     owner: context3.repo.owner,
@@ -84315,6 +84347,13 @@ async function createRelease(octokit, context3, options) {
 __name(createRelease, "createRelease");
 async function uploadReleaseAsset(octokit, context3, releaseId, asset) {
   core4.info(`Uploading asset: ${asset.name}`);
+  const existing = await octokit.paginate(octokit.rest.repos.listReleaseAssets, {
+    owner: context3.repo.owner,
+    repo: context3.repo.repo,
+    release_id: releaseId,
+    per_page: 100
+  });
+  if (existing.some((item) => item.name === asset.name)) return;
   const fileContent = fs.readFileSync(asset.path);
   await octokit.rest.repos.uploadReleaseAsset({
     owner: context3.repo.owner,
@@ -84335,7 +84374,8 @@ async function tagExists(octokit, context3, tagName) {
     });
     return true;
   } catch (error2) {
-    return false;
+    if (error2.status === 404) return false;
+    throw error2;
   }
 }
 __name(tagExists, "tagExists");
@@ -84427,7 +84467,7 @@ function renderReleaseNotes(input) {
     md += "\n\n";
   }
   md += "---\n\n";
-  md += "_Released by [Contractual](https://github.com/AcmeInc/contractual)_\n";
+  md += "_Released by [Contractual](https://github.com/codotech/contractual)_\n";
   return md;
 }
 __name(renderReleaseNotes, "renderReleaseNotes");
@@ -84462,20 +84502,27 @@ function escapeRegex2(str) {
 __name(escapeRegex2, "escapeRegex");
 
 // src/modes/release.ts
-var CHANGESETS_PATH = ".contractual/changesets";
 async function runRelease(inputs) {
   const octokit = github2.getOctokit(inputs.githubToken);
   const context3 = github2.context;
+  const baseBranch = inputs.baseBranch || context3.payload.repository?.default_branch || "next";
+  if (!["push", "workflow_dispatch"].includes(context3.eventName) || context3.ref !== `refs/heads/${baseBranch}`) {
+    throw new Error(`Release mode must run on a push or manual run on ${baseBranch}.`);
+  }
   core5.info("Loading contractual config...");
   const config = loadConfig();
+  if (config.versioning?.mode === "fixed") throw new Error("Fixed versioning is not implemented. Use independent versioning.");
+  if (inputs.tagPrefix !== "contract" && config.contracts.length > 1) {
+    throw new Error("Multiple contracts require tag-prefix: contract to avoid tag collisions.");
+  }
   core5.info("Reading changesets...");
-  const changesets = await readChangesets(CHANGESETS_PATH);
+  const changesets = await readChangesets(path.join(config.configDir, ".contractual/changesets"));
   if (changesets.length > 0) {
     core5.info(`Found ${changesets.length} changeset(s). Running version workflow...`);
     await handleVersioning(octokit, context3, config, changesets, inputs);
   } else {
     core5.info("No changesets found. Checking if this is a version merge...");
-    const versionMergeInfo = await checkIfVersionMerge(octokit, context3);
+    const versionMergeInfo = await checkIfVersionMerge(octokit, context3, config);
     if (versionMergeInfo) {
       core5.info("Version merge detected. Running post-release...");
       await handlePostRelease(octokit, context3, config, versionMergeInfo, inputs);
@@ -84491,6 +84538,8 @@ async function handleVersioning(octokit, context3, config, changesets, inputs) {
     throw new Error("No .contractual directory found");
   }
   const aggregatedBumps = aggregateBumps(changesets);
+  const unknown = Object.keys(aggregatedBumps).filter((name) => !config.contracts.some((c) => c.name === name));
+  if (unknown.length) throw new Error(`Unknown contracts in changesets: ${unknown.join(", ")}. No changesets were consumed.`);
   const versionManager = new VersionManager(contractualDir);
   const bumpResults = [];
   const consumedChangesets = [];
@@ -84530,25 +84579,14 @@ async function handleVersioning(octokit, context3, config, changesets, inputs) {
     core5.info(`Bumped ${contractName}: ${oldVersion} \u2192 ${newVersion} (${bumpType})${tagSuffix}`);
   }
   const changelogPath = path.join(config.configDir, "CHANGELOG.md");
-  try {
-    appendChangelog(changelogPath, bumpResults);
-    core5.info("Updated CHANGELOG.md");
-  } catch (error2) {
-    const message = error2 instanceof Error ? error2.message : "Unknown error";
-    core5.warning(`Failed to update changelog: ${message}`);
-  }
+  appendChangelog(changelogPath, bumpResults);
+  core5.info("Updated CHANGELOG.md");
   const changesetsDir = path.join(contractualDir, CHANGESETS_DIR);
   for (const changeset of changesets) {
     const changesetPath = path.join(changesetsDir, changeset.filename);
-    try {
-      if (fs.existsSync(changesetPath)) {
-        fs.unlinkSync(changesetPath);
-        consumedChangesets.push(changeset.filename);
-        core5.debug(`Deleted changeset: ${changeset.filename}`);
-      }
-    } catch {
-      core5.debug(`Failed to delete changeset: ${changeset.filename}`);
-    }
+    fs.unlinkSync(changesetPath);
+    consumedChangesets.push(changeset.filename);
+    core5.debug(`Deleted changeset: ${changeset.filename}`);
   }
   const bumpedVersions = {};
   for (const bump of bumpResults) {
@@ -84564,7 +84602,8 @@ async function handleVersioning(octokit, context3, config, changesets, inputs) {
       branch: inputs.versionPrBranch,
       title: inputs.versionPrTitle,
       body: prBody,
-      baseBranch: inputs.baseBranch
+      baseBranch: inputs.baseBranch,
+      files: [contractualDir, changelogPath, ...config.contracts.map((c) => c.absolutePath)].filter((path4) => fs.existsSync(path4)).map((path4) => path.relative(process.cwd(), path4))
     });
     core5.setOutput("version-pr-url", prUrl);
     core5.info(`Version Contracts PR: ${prUrl}`);
@@ -84582,25 +84621,26 @@ async function handlePostRelease(octokit, context3, config, mergeInfo, inputs) {
   const versionManager = new VersionManager(contractualDir);
   const createdTags = [];
   const releaseUrls = [];
+  const failures = [];
   for (const bump of mergeInfo.bumps) {
     const { contract: contractName, oldVersion, newVersion } = bump;
     const contract = config.contracts.find((c) => c.name === contractName);
+    if (!contract) throw new Error(`Cannot release unknown contract: ${contractName}`);
     const tagName = formatTag(contractName, newVersion, inputs.tagPrefix);
-    if (await tagExists(octokit, context3, tagName)) {
-      core5.info(`Tag ${tagName} already exists, skipping...`);
-      continue;
-    }
     try {
-      await createGitTag(tagName, `Release ${contractName} ${newVersion}`);
-      createdTags.push(tagName);
+      if (!await tagExists(octokit, context3, tagName)) {
+        await createGitTag(tagName, `Release ${contractName} ${newVersion}`, context3.sha);
+        createdTags.push(tagName);
+      }
     } catch (error2) {
       const message = error2 instanceof Error ? error2.message : "Unknown error";
       core5.warning(`Failed to create tag ${tagName}: ${message}`);
+      failures.push(`${tagName}: ${message}`);
       continue;
     }
     if (inputs.createReleases) {
       try {
-        const changes = extractChangelogSection(contractName, newVersion);
+        const changes = extractChangelogSection(contractName, newVersion, path.join(config.configDir, "CHANGELOG.md"));
         const releaseNotes = renderReleaseNotes({
           contractName,
           oldVersion,
@@ -84617,6 +84657,9 @@ async function handlePostRelease(octokit, context3, config, mergeInfo, inputs) {
         releaseUrls.push(release.url);
         if (inputs.attachSpecs && contract) {
           const snapshotPath = versionManager.getSnapshotPath(contractName);
+          if (!snapshotPath || !fs.existsSync(snapshotPath)) {
+            throw new Error(`Missing release snapshot for ${contractName}`);
+          }
           if (snapshotPath && fs.existsSync(snapshotPath)) {
             const ext = path.extname(snapshotPath);
             const assetName = `${contractName}-${newVersion}${ext}`;
@@ -84629,17 +84672,20 @@ async function handlePostRelease(octokit, context3, config, mergeInfo, inputs) {
             } catch (error2) {
               const message = error2 instanceof Error ? error2.message : "Unknown error";
               core5.warning(`Failed to attach spec ${assetName}: ${message}`);
+              failures.push(`${assetName}: ${message}`);
             }
           }
         }
       } catch (error2) {
         const message = error2 instanceof Error ? error2.message : "Unknown error";
         core5.warning(`Failed to create release for ${tagName}: ${message}`);
+        failures.push(`${tagName}: ${message}`);
       }
     }
   }
   core5.setOutput("created-tags", JSON.stringify(createdTags));
   core5.setOutput("release-urls", JSON.stringify(releaseUrls));
+  if (failures.length) throw new Error(`Release incomplete; rerun to resume: ${failures.join("; ")}`);
   core5.info(`Created ${createdTags.length} tag(s) and ${releaseUrls.length} release(s)`);
 }
 __name(handlePostRelease, "handlePostRelease");
@@ -84651,24 +84697,18 @@ function detectBumpType(oldVersion, newVersion) {
   return "patch";
 }
 __name(detectBumpType, "detectBumpType");
-async function checkIfVersionMerge(octokit, context3) {
+async function checkIfVersionMerge(octokit, context3, config) {
+  const versionsPath = path.relative(process.cwd(), path.join(config.configDir, ".contractual/versions.json")).replaceAll("\\", "/");
   try {
     const { data: commit } = await octokit.rest.repos.getCommit({
       owner: context3.repo.owner,
       repo: context3.repo.repo,
       ref: context3.sha
     });
-    const versionsFile = commit.files?.find(
-      (f) => f.filename === ".contractual/versions.json"
-    );
-    if (!versionsFile) {
-      return null;
-    }
-    core5.debug("Commit modifies versions.json - detected as version merge");
     const { data: currentContent } = await octokit.rest.repos.getContent({
       owner: context3.repo.owner,
       repo: context3.repo.repo,
-      path: ".contractual/versions.json",
+      path: versionsPath,
       ref: context3.sha
     });
     const parentSha = commit.parents?.[0]?.sha;
@@ -84678,14 +84718,15 @@ async function checkIfVersionMerge(octokit, context3) {
         const { data: previousContent } = await octokit.rest.repos.getContent({
           owner: context3.repo.owner,
           repo: context3.repo.repo,
-          path: ".contractual/versions.json",
+          path: versionsPath,
           ref: parentSha
         });
         if ("content" in previousContent) {
           const decoded = Buffer.from(previousContent.content, "base64").toString("utf-8");
           previousVersions = JSON.parse(decoded);
         }
-      } catch {
+      } catch (error2) {
+        if (error2.status !== 404) throw error2;
         core5.debug("Could not read parent versions.json - assuming first release");
       }
     }
@@ -84714,8 +84755,8 @@ async function checkIfVersionMerge(octokit, context3) {
     return { bumps };
   } catch (error2) {
     const message = error2 instanceof Error ? error2.message : "Unknown error";
-    core5.warning(`Failed to check if version merge: ${message}`);
-    return null;
+    if (error2.status === 404) return null;
+    throw new Error(`Failed to check if version merge: ${message}`);
   }
 }
 __name(checkIfVersionMerge, "checkIfVersionMerge");
@@ -84740,7 +84781,7 @@ function getInputs() {
     anthropicApiKey: core6.getInput("anthropic-api-key") || void 0,
     failOnBreaking: core6.getInput("fail-on-breaking") === "true",
     autoChangeset: core6.getInput("auto-changeset") === "true",
-    versionPrTitle: core6.getInput("version-pr-title") || "Version Contracts",
+    versionPrTitle: core6.getInput("version-pr-title") || "chore: version contracts",
     versionPrBranch: core6.getInput("version-pr-branch") || "contractual/version-contracts",
     baseBranch: core6.getInput("base-branch") || void 0,
     preReleaseTag: core6.getInput("pre-release-tag") || void 0,

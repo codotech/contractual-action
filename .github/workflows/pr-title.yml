@@ -1,0 +1,21 @@
+name: Pull request title
+on:
+  pull_request:
+    branches: [next]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  title:
+    name: PR title
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          node <<'NODE'
+          if (!/^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9._/-]+\))?!?: \S[^\r\n]*$/.test(process.env.PR_TITLE || '')) {
+            console.error('Use a Conventional Commit PR title, such as fix(release): resume incomplete releases');
+            process.exit(1);
+          }
+          NODE
