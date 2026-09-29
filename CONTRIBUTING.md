@@ -11,7 +11,7 @@ pnpm test
 pnpm build
 ```
 
-Commit `dist/` with source changes. CI rebuilds the bundle and checks for drift on Node 22 and 24. The Action runs on GitHub's Node 24 runtime; self-hosted runners must support that runtime.
+Commit `dist/` with source changes. CI rebuilds the bundle and checks for drift on Node 22, 24, and 26. The Action runs on GitHub's Node 24 runtime; self-hosted runners must support that runtime.
 
 ## Release approval
 
