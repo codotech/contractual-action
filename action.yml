@@ -27,7 +27,7 @@ inputs:
   version-pr-title:
     description: 'Title for the Version Contracts PR'
     required: false
-    default: 'Version Contracts'
+    default: 'chore: version contracts'
   version-pr-branch:
     description: 'Branch name for Version Contracts PR'
     required: false
@@ -72,5 +72,5 @@ outputs:
     description: 'JSON array of created git tags (post-merge)'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'

@@ -4,7 +4,7 @@ export default defineConfig({
   entry: { index: 'src/main.ts' },
   format: ['cjs'],
   outDir: 'dist',
-  target: 'node20',
+  target: 'node22',
   // Bundle everything into a single file (GitHub Actions requirement)
   noExternal: [/.*/],
   clean: true,

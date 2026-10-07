@@ -4,8 +4,10 @@ Schema contract lifecycle management for GitHub — lint, detect breaking change
 
 ## Usage
 
+Requires Node 22+ for development and a GitHub runner supporting the Action's Node 24 runtime. Licensed under MIT. The example uses an existing development tag; stable release tags require a separate approval. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ```yaml
-- uses: contractual-dev/action@v1
+- uses: codotech/contractual-action@v0.1.0-dev.14
   with:
     mode: pr-check
     github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +41,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
 
-      - uses: contractual-dev/action@v1
+      - uses: codotech/contractual-action@v0.1.0-dev.14
         with:
           mode: pr-check
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -70,7 +72,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: contractual-dev/action@v1
+      - uses: codotech/contractual-action@v0.1.0-dev.14
         with:
           mode: release
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -84,9 +86,9 @@ jobs:
 | `github-token` | No | `${{ github.token }}` | Token for PR comments and commits |
 | `fail-on-breaking` | No | `true` | Fail if breaking changes detected |
 | `auto-changeset` | No | `true` | Auto-generate changeset if missing |
-| `version-pr-title` | No | `Version Contracts` | Title of the Version PR |
+| `version-pr-title` | No | `chore: version contracts` | Title of the Version PR |
 | `version-pr-branch` | No | `contractual/version-contracts` | Branch for the Version PR |
-| `anthropic-api-key` | No | — | Anthropic API key for AI features |
+| `anthropic-api-key` | No | — | Reserved; AI features are not implemented |
 
 ## Outputs
 

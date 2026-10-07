@@ -1,0 +1,2 @@
+patchedDependencies:
+  '@contractual/changesets@0.1.0-dev.5': patches/@contractual__changesets@0.1.0-dev.5.patch

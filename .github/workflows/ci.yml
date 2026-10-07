@@ -1,49 +1,43 @@
-name: CI
-
+name: Continuous Integration
 on:
-  push:
-    branches: [master, main]
   pull_request:
-    branches: [master, main]
-
+    branches: [next]
+  push:
+    branches: [next]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
-  build:
+  verify:
+    name: Verify (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24, 26]
     steps:
       - uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
-
+          version: 10.26.2
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.node }}
           cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
-      - name: Check dist is up to date
-        run: |
-          if [ -n "$(git status dist --porcelain)" ]; then
-            echo "dist/ is out of date. Run 'pnpm build' and commit."
-            exit 1
-          fi
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v4
-  #       with:
-  #         version: 9
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-  #         cache: pnpm
-  #     - run: pnpm install
-  #     - run: pnpm test
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Verify committed bundle
+        run: git diff --exit-code -- dist
+  ci:
+    name: CI
+    if: always()
+    needs: [verify]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          RESULT: ${{ needs.verify.result }}
+        run: test "$RESULT" = success

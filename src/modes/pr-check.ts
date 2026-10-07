@@ -3,9 +3,13 @@ import * as github from '@actions/github';
 import {
   loadConfig,
   getLinter,
+  getDiffer,
   diffContracts,
+  readChangesets,
+  aggregateBumps,
   createChangeset as cliCreateChangeset,
 } from '@contractual/cli';
+import { join, relative } from 'node:path';
 import { postOrUpdateComment } from '../github/comments.js';
 import { commitChangeset } from '../github/commits.js';
 import { renderPRComment } from '../render/pr-comment.js';
@@ -50,18 +54,26 @@ export async function runPRCheck(inputs: ActionInputs): Promise<void> {
   // Check for existing changeset in PR
   core.info('Checking for existing changeset...');
   const prFiles = await getPRFiles(octokit, context, prNumber);
-  const hasChangeset = prFiles.some(
-    (f) =>
-      f.filename.startsWith('.contractual/changesets/') &&
-      f.filename.endsWith('.md')
+  const changesetsDir = join(config.configDir, '.contractual/changesets');
+  const changedPaths = new Set(prFiles.filter(f => f.status !== 'removed').map(f => f.filename));
+  const changesets = (await readChangesets(changesetsDir)).filter(cs =>
+    changedPaths.has(relative(process.cwd(), join(changesetsDir, cs.filename)).replaceAll('\\', '/'))
   );
+  const bumps = aggregateBumps(changesets);
+  const unknownContracts = Object.keys(bumps).filter(name => !config.contracts.some(c => c.name === name));
+  if (unknownContracts.length) throw new Error(`Changesets reference unknown contracts: ${unknownContracts.join(', ')}`);
+  const priorities = { none: 0, patch: 1, minor: 2, major: 3 };
+  const uncovered = diffResults.filter(result => result.changes.length > 0 &&
+    priorities[bumps[result.contract] || 'none'] < priorities[result.suggestedBump]);
+  const hasChangeset = hasChanges && uncovered.length === 0;
 
   // Auto-generate changeset if missing
   let changesetCreated = false;
-  if (hasChanges && !hasChangeset && inputs.autoChangeset) {
+  const isFork = context.payload.pull_request?.head.repo?.full_name !== context.payload.repository?.full_name;
+  if (hasChanges && !hasChangeset && inputs.autoChangeset && !isFork) {
     core.info('Auto-generating changeset...');
     try {
-      const changesetFile = generateChangeset(diffResults);
+      const changesetFile = generateChangeset(uncovered);
       if (changesetFile) {
         await commitChangeset(changesetFile);
         changesetCreated = true;
@@ -102,6 +114,11 @@ export async function runPRCheck(inputs: ActionInputs): Promise<void> {
     return;
   }
 
+  if (hasChanges && !hasChangeset && !changesetCreated && config.changeset?.requireOnPR !== false) {
+    core.setFailed('A changeset covering every changed contract with a sufficient version bump is required.');
+    return;
+  }
+
   if (hasBreaking && inputs.failOnBreaking) {
     core.setFailed('Breaking changes detected. Review the PR comment for details.');
   }
@@ -124,8 +141,7 @@ async function runLint(config: ResolvedConfig): Promise<LintResult[]> {
       const linter = getLinter(contract.type, contract.lint);
 
       if (!linter) {
-        core.debug(`No linter available for ${contract.name} (type: ${contract.type})`);
-        continue;
+        throw new Error(`No linter available for ${contract.type}. Configure a custom lint command or set lint: false.`);
       }
 
       const result = await linter(contract.absolutePath);
@@ -137,6 +153,7 @@ async function runLint(config: ResolvedConfig): Promise<LintResult[]> {
       const message = error instanceof Error ? error.message : 'Linter failed';
       results.push({
         contract: contract.name,
+        specPath: contract.absolutePath,
         errors: [{ path: '', message, severity: 'error' }],
         warnings: [],
       });
@@ -152,17 +169,13 @@ async function runLint(config: ResolvedConfig): Promise<LintResult[]> {
  * The action decides separately whether to fail based on inputs.failOnBreaking.
  */
 async function runDiff(config: ResolvedConfig): Promise<DiffResult[]> {
-  try {
-    const { results } = await diffContracts(config, { includeEmpty: false });
-    return results;
-  } catch (error) {
-    // Handle case where no .contractual directory exists
-    if (error instanceof Error && error.message.includes('No .contractual directory')) {
-      core.warning('No .contractual directory found - skipping diff');
-      return [];
+  for (const contract of config.contracts) {
+    if (contract.breaking !== false && !getDiffer(contract.type, contract.breaking)) {
+      throw new Error(`No differ available for ${contract.type}. Configure a custom breaking command or set breaking: false.`);
     }
-    throw error;
   }
+  const { results } = await diffContracts(config, { includeEmpty: false });
+  return results;
 }
 
 /**
@@ -188,11 +201,11 @@ async function getPRFiles(
   octokit: ReturnType<typeof github.getOctokit>,
   context: typeof github.context,
   prNumber: number
-): Promise<Array<{ filename: string }>> {
-  const { data: files } = await octokit.rest.pulls.listFiles({
+): Promise<Array<{ filename: string; status: string }>> {
+  return await octokit.paginate(octokit.rest.pulls.listFiles, {
     owner: context.repo.owner,
     repo: context.repo.repo,
     pull_number: prNumber,
+    per_page: 100,
   });
-  return files;
 }

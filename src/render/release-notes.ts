@@ -68,7 +68,7 @@ export function renderReleaseNotes(input: ReleaseNotesInput): string {
 
   // Footer
   md += '---\n\n';
-  md += '_Released by [Contractual](https://github.com/AcmeInc/contractual)_\n';
+  md += '_Released by [Contractual](https://github.com/codotech/contractual)_\n';
 
   return md;
 }
