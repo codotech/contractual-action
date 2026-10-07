@@ -1,0 +1,96 @@
+name: Release Beta Action
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full reviewed commit SHA on next, explicitly approved by Omer
+        required: true
+        type: string
+      tag:
+        description: Exact approved beta tag (for example v0.2.0-beta.0)
+        required: true
+        type: string
+      update_major_tag:
+        description: Also create or advance the major alias (for example v0), only if explicitly approved
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.ref == 'refs/heads/next'
+    environment: release
+    runs-on: ubuntu-latest
+    env:
+      APPROVED_COMMIT: ${{ inputs.commit }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: next
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify approved commit and immutable beta tag
+        run: |
+          [[ "$APPROVED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-beta\.(0|[1-9][0-9]*)$ ]]
+          git merge-base --is-ancestor "$APPROVED_COMMIT" origin/next
+          git switch --detach "$APPROVED_COMMIT"
+          test "$(git rev-parse HEAD)" = "$APPROVED_COMMIT"
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            test "$(git rev-parse "refs/tags/$TAG^{commit}")" = "$APPROVED_COMMIT"
+          fi
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.26.2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit --audit-level low
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Verify the reviewed bundle
+        run: git diff --exit-code -- dist
+      - name: Require published Contractual beta dependencies
+        run: |
+          for package_name in @contractual/cli @contractual/governance; do
+            version="$(jq -r --arg name "$package_name" '.devDependencies[$name]' package.json)"
+            [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]
+            test "$(npm view "$package_name@$version" version)" = "$version"
+          done
+      - name: Tag and publish the approved GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > "$RUNNER_TEMP/release.json"; then
+            jq -e '.prerelease == true and .draft == false' "$RUNNER_TEMP/release.json" > /dev/null
+            echo "$TAG is already published; no release changes needed."
+          else
+            jq -e '.status == "404"' "$RUNNER_TEMP/release.json" > /dev/null
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            if ! git show-ref --verify --quiet "refs/tags/$TAG"; then
+              git tag -a "$TAG" "$APPROVED_COMMIT" -m "Release $TAG"
+            fi
+            git -c credential.helper='!gh auth git-credential' push origin "refs/tags/$TAG"
+            gh release create "$TAG" --verify-tag --prerelease --latest=false --generate-notes --title "$TAG"
+          fi
+      - name: Advance only the separately approved major alias
+        if: inputs.update_major_tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          alias="${TAG%%.*}"
+          expected_oid=""
+          if git show-ref --verify --quiet "refs/tags/$alias"; then
+            expected_oid="$(git rev-parse "refs/tags/$alias")"
+            git merge-base --is-ancestor "refs/tags/$alias^{commit}" "$APPROVED_COMMIT"
+            # Only advance an existing beta alias; do not replace a stable channel.
+            git tag --points-at "refs/tags/$alias^{commit}" --list "$alias.*-beta.*" | grep -q .
+          fi
+          git -c credential.helper='!gh auth git-credential' push --force-with-lease="refs/tags/$alias:$expected_oid" origin "$APPROVED_COMMIT:refs/tags/$alias"
