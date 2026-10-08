@@ -1,2 +1,15 @@
 patchedDependencies:
   '@contractual/changesets@0.1.0-dev.5': patches/@contractual__changesets@0.1.0-dev.5.patch
+
+overrides:
+  'undici@<6.28.1': 6.28.1
+  'minimatch@>=9.0.0 <9.0.7': 9.0.7
+  'brace-expansion@>=2.0.0 <2.1.7': 2.1.7
+  'vite@>=7.0.0 <7.3.5': ^7.3.5
+  'esbuild@>=0.27.3 <0.28.1': 0.28.1
+  'picomatch@>=4.0.0 <4.0.4': ^4.0.4
+  'postcss@<8.5.23': ^8.5.23
+  'nanoid@<3.3.12': 3.3.12
+  'js-yaml@>=4.0.0 <4.3.2': 4.3.2
+  'fast-uri@>=3.0.0 <3.1.8': 3.1.8
+  'source-map-js@>=1.0.0 <1.2.2': 1.2.2
