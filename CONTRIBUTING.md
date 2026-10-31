@@ -17,6 +17,8 @@ Commit `dist/` with source changes. CI rebuilds the bundle and checks for drift 
 
 Ask Omer before creating or moving version tags, publishing anything, or changing release aliases. Existing tags are left intact. Documentation uses `@v0.1.0-dev.14`, the highest existing tag; it does not yet include the changes in this PR. A new version and an optional major alias require a separate approval after review and validation.
 
-## Dependency patch
+## Contractual dependencies
 
-The checked-in pnpm patch backports the core repository's malformed-YAML version-sync fix to `@contractual/changesets@0.1.0-dev.5`. This keeps installations reproducible without publishing a new package. Remove the patch only after upgrading to an approved published dependency that includes the fix and passing the regression test.
+CLI and governance use npm's `beta` dist-tag in `package.json`. The lockfile records the exact resolved versions, and the Action bundles those versions in `dist/`. To adopt a newer beta, run `pnpm update @contractual/cli @contractual/governance`, run the checks above, and commit the lockfile and rebuilt bundle. A moving npm tag does not change an already released Action.
+
+The published beta dependencies include the malformed-YAML version-sync fix, so no local patch is needed. Keep the regression test passing when updating dependencies.
