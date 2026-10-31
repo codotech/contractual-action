@@ -6,7 +6,7 @@ import { updateSpecVersion } from '@contractual/cli';
 
 const directories: string[] = [];
 afterEach(() => directories.splice(0).forEach(dir => rmSync(dir, { recursive: true, force: true })));
-it('bundles the malformed YAML version-sync fix without a new npm publication', () => {
+it('preserves malformed YAML version syncing with the published beta dependencies', () => {
   const directory = mkdtempSync(join(tmpdir(), 'action-spec-test-')); directories.push(directory);
   const path = join(directory, 'api.yaml');
   const malformed = 'info:\n  version: 1.0.0\nbad: [unterminated\n';
