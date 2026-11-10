@@ -70229,12 +70229,12 @@ function getSchemaShape(schema, dialect) {
   }
   return `${dialect}:${shape}`;
 }
-var import__2, import_draft4, import_ajv_formats3, ANNOTATION_KEYWORDS, AjvValidator;
+var import__2, import_draft4, import_ajv_formats2, ANNOTATION_KEYWORDS, AjvValidator;
 var init_ajv = __esm({
   "node_modules/.pnpm/@redocly+openapi-core@2.76.0/node_modules/@redocly/openapi-core/lib/rules/ajv.js"() {
     import__2 = __toESM(require__(), 1);
     import_draft4 = __toESM(require_draft42(), 1);
-    import_ajv_formats3 = __toESM(require_dist3(), 1);
+    import_ajv_formats2 = __toESM(require_dist3(), 1);
     init_ref_utils();
     init_is_plain_object();
     ANNOTATION_KEYWORDS = [
@@ -70324,7 +70324,7 @@ var init_ajv = __esm({
             }
           };
           this.instances[dialect] = dialect === "2020" ? new import__2.default(options) : new import_draft4.default(options);
-          (0, import_ajv_formats3.default)(this.instances[dialect]);
+          (0, import_ajv_formats2.default)(this.instances[dialect]);
         }
         return this.instances[dialect];
       }
@@ -116211,7 +116211,7 @@ async function lintOpenAPI(specPath) {
   let lint2;
   let loadConfig3;
   try {
-    const redocly = await import('@redocly/openapi-core');
+    const redocly = await Promise.resolve().then(() => (init_lib(), lib_exports));
     lint2 = redocly.lint;
     loadConfig3 = redocly.loadConfig;
   } catch {
@@ -116258,8 +116258,8 @@ async function lintOpenAPI(specPath) {
 __name(lintOpenAPI, "lintOpenAPI");
 
 // node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
-var import_ajv2 = __toESM(require_ajv(), 1);
-var import_ajv_formats2 = __toESM(require_dist2(), 1);
+var import_ajv6 = __toESM(require_ajv(), 1);
+var import_ajv_formats3 = __toESM(require_dist2(), 1);
 
 // node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/types.js
 var CONSTRAINT_DIRECTION = {
@@ -118647,8 +118647,8 @@ function walkSchema(schema, path15, root, visitor) {
 __name(walkSchema, "walkSchema");
 
 // node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
-var AjvConstructor2 = import_ajv2.default.default ?? import_ajv2.default;
-var addFormatsFunc2 = import_ajv_formats2.default.default ?? import_ajv_formats2.default;
+var AjvConstructor2 = import_ajv6.default.default ?? import_ajv6.default;
+var addFormatsFunc2 = import_ajv_formats3.default.default ?? import_ajv_formats3.default;
 async function lintJsonSchema(specPath, options = {}) {
   const errors = [];
   const warnings = [];
