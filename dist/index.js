@@ -47632,7 +47632,7 @@ var require_dist2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/runner.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/runner.js
 var runner_exports = {};
 __export(runner_exports, {
   executeCustomCommand: () => executeCustomCommand,
@@ -47870,7 +47870,7 @@ function parseLineDiffOutput(output) {
   return { contract: "", changes, summary, suggestedBump };
 }
 var init_runner = __esm({
-  "node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/runner.js"() {
+  "node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/runner.js"() {
     __name(isExecError, "isExecError");
     __name(executeCustomCommand, "executeCustomCommand");
     __name(parseCustomLintOutput, "parseCustomLintOutput");
@@ -70655,7 +70655,7 @@ function groupAssertionRules(config, plugins) {
     return {};
   }
   const transformedRules = {};
-  const assertions = [];
+  const assertions2 = [];
   for (const [ruleKey, rule] of Object.entries(config.rules)) {
     if (ruleKey.startsWith("rule/") && isPlainObject(rule)) {
       const assertion = rule;
@@ -70665,7 +70665,7 @@ function groupAssertionRules(config, plugins) {
           registerCustomAssertions(plugins, context3);
         }
       }
-      assertions.push({
+      assertions2.push({
         ...assertion,
         assertionId: ruleKey
       });
@@ -70673,8 +70673,8 @@ function groupAssertionRules(config, plugins) {
       transformedRules[ruleKey] = rule;
     }
   }
-  if (assertions.length > 0) {
-    transformedRules.assertions = assertions;
+  if (assertions2.length > 0) {
+    transformedRules.assertions = assertions2;
   }
   return transformedRules;
 }
@@ -72274,8 +72274,8 @@ var init_assertions = __esm({
     init_utils2();
     Assertions2 = /* @__PURE__ */ __name((opts) => {
       const visitors = [];
-      const assertions = Object.values(opts).filter((opt) => isPlainObject(opt));
-      for (const [_4, assertion] of assertions.entries()) {
+      const assertions2 = Object.values(opts).filter((opt) => isPlainObject(opt));
+      for (const [_4, assertion] of assertions2.entries()) {
         if (!isString(assertion.subject.type)) {
           throw new Error(`${assertion.assertionId}: 'type' (String) is required`);
         }
@@ -75136,9 +75136,9 @@ var init_assertions2 = __esm({
     init_keys_of();
     __name(getGraphqlAssertsToApply, "getGraphqlAssertsToApply");
     GraphqlAssertions = /* @__PURE__ */ __name((configurableRulesObject) => {
-      const assertions = Object.values(configurableRulesObject).filter(isPlainObject);
+      const assertions2 = Object.values(configurableRulesObject).filter(isPlainObject);
       const visitors = [];
-      for (const assertion of assertions) {
+      for (const assertion of assertions2) {
         if (assertion.severity === "off")
           continue;
         const kind = assertion.subject?.type;
@@ -115792,15 +115792,15 @@ var core6 = __toESM(require_core());
 var core2 = __toESM(require_core());
 var github = __toESM(require_github());
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/loader.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/loader.js
 var import_yaml = __toESM(require_dist(), 1);
 var import_fast_glob = __toESM(require_out4(), 1);
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/validator.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/validator.js
 var import_ajv = __toESM(require_ajv(), 1);
 var import_ajv_formats = __toESM(require_dist2(), 1);
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/schema.json
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/schema.json
 var schema_default = {
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "https://contractual.dev/schemas/config.json",
@@ -115928,7 +115928,7 @@ var schema_default = {
   additionalProperties: false
 };
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/validator.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/validator.js
 var AjvConstructor = import_ajv.default.default ?? import_ajv.default;
 var addFormatsFunc = import_ajv_formats.default.default ?? import_ajv_formats.default;
 function validateConfig(config) {
@@ -115951,7 +115951,7 @@ function formatValidationErrors(errors) {
 }
 __name(formatValidationErrors, "formatValidationErrors");
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/loader.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/config/loader.js
 var CONFIG_FILENAMES = ["contractual.yaml", "contractual.yml"];
 var MAX_GLOB_PATTERN_LENGTH = 1024;
 var MAX_GLOB_NESTING = 32;
@@ -116099,7 +116099,7 @@ function loadConfig(startDir) {
 }
 __name(loadConfig, "loadConfig");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/registry.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/registry.js
 var linters = /* @__PURE__ */ new Map();
 var differs = /* @__PURE__ */ new Map();
 function registerLinter(type, linter) {
@@ -116206,7 +116206,7 @@ function createCustomDiffer(commandTemplate) {
 }
 __name(createCustomDiffer, "createCustomDiffer");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/linters/openapi-redocly.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/openapi-redocly.js
 async function lintOpenAPI(specPath) {
   let lint2;
   let loadConfig3;
@@ -116257,11 +116257,11 @@ async function lintOpenAPI(specPath) {
 }
 __name(lintOpenAPI, "lintOpenAPI");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
 var import_ajv6 = __toESM(require_ajv(), 1);
 var import_ajv_formats3 = __toESM(require_dist2(), 1);
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/types.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/types.js
 var CONSTRAINT_DIRECTION = {
   minimum: "min",
   maximum: "max",
@@ -116362,7 +116362,7 @@ function joinPath(basePath, ...segments) {
 }
 __name(joinPath, "joinPath");
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/walker.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/walker.js
 function walk(oldSchema, newSchema, basePath = "") {
   return walkInternal(oldSchema, newSchema, basePath, 0);
 }
@@ -116426,6 +116426,20 @@ function walkInternal(oldSchema, newSchema, path15, depth) {
   changes.push(...compareUnevaluatedItems(old, newS, path15));
   changes.push(...compareMinMaxContains(old, newS, path15));
   changes.push(...compareComposition(old, newS, path15, depth));
+  const schemaDialects = [old, newS].filter((schema) => Object.hasOwn(schema, "$schema")).map((schema) => schema.$schema);
+  if (schemaDialects.length > 0) {
+    for (const change of changes) {
+      if (change.propertyAddition) {
+        change.propertyAddition.schemaDialects = [
+          ...change.propertyAddition.schemaDialects ?? [],
+          ...schemaDialects
+        ];
+      }
+    }
+  }
+  if (old.unevaluatedProperties !== void 0 || newS.unevaluatedProperties !== void 0 || old.unevaluatedItems !== void 0 || newS.unevaluatedItems !== void 0) {
+    return uncertainPropertyAdditions(changes);
+  }
   return changes;
 }
 __name(walkInternal, "walkInternal");
@@ -116764,7 +116778,8 @@ function compareProperties(oldSchema, newSchema, path15, depth) {
         path: joinPath(path15, "properties", key),
         type: "property-added",
         oldValue: void 0,
-        newValue: newProps[key]
+        newValue: newProps[key],
+        propertyAddition: { name: key, oldParent: oldSchema, newParent: newSchema }
       });
     }
   }
@@ -117044,7 +117059,7 @@ function compareArrayItems(oldSchema, newSchema, path15, depth) {
     if (!deepEqual(oldSchema.contains, newSchema.contains)) {
       if (isSchemaObject(oldSchema.contains) && isSchemaObject(newSchema.contains)) {
         const nestedChanges = walkInternal(oldSchema.contains, newSchema.contains, joinPath(path15, "contains"), depth + 1);
-        changes.push(...nestedChanges);
+        changes.push(...oldSchema.maxContains !== void 0 || newSchema.maxContains !== void 0 ? uncertainPropertyAdditions(nestedChanges) : nestedChanges);
       } else {
         changes.push({
           path: joinPath(path15, "contains"),
@@ -117213,7 +117228,7 @@ function compareOneOf(oldSchema, newSchema, path15, depth) {
     }
     for (const [oldIdx, newIdx] of matched.matched) {
       const nestedChanges = walkInternal(oldOneOf[oldIdx], newOneOf[newIdx], joinPath(path15, "oneOf", String(newIdx)), depth + 1);
-      changes.push(...nestedChanges);
+      changes.push(...uncertainPropertyAdditions(nestedChanges));
     }
   }
   return changes;
@@ -117352,8 +117367,12 @@ function matchCompositionOptions(oldOptions, newOptions) {
   return { matched, removed, added };
 }
 __name(matchCompositionOptions, "matchCompositionOptions");
+function uncertainPropertyAdditions(changes) {
+  return changes.map((change) => change.propertyAddition ? { ...change, propertyAddition: { ...change.propertyAddition, uncertain: true } } : change);
+}
+__name(uncertainPropertyAdditions, "uncertainPropertyAdditions");
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/classifiers.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/classifiers.js
 var BREAKING_CHANGES = /* @__PURE__ */ new Set([
   "property-removed",
   "required-added",
@@ -117530,7 +117549,7 @@ function isObject(value2) {
 }
 __name(isObject, "isObject");
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/ref-resolver.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/ref-resolver.js
 function resolveRefs(schema) {
   const context3 = {
     root: schema,
@@ -117687,7 +117706,7 @@ function isObject2(value2) {
 }
 __name(isObject2, "isObject");
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/format.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/format.js
 function formatChangeMessage(change) {
   const pathDisplay = decodeJsonPointer(change.path || "/");
   switch (change.type) {
@@ -117870,7 +117889,7 @@ function extractConstraintName(path15) {
 }
 __name(extractConstraintName, "extractConstraintName");
 
-// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.2/node_modules/@contractual/differs.core/dist/assemble.js
+// node_modules/.pnpm/@contractual+differs.core@0.1.0-beta.3/node_modules/@contractual/differs.core/dist/assemble.js
 function assembleResult(rawChanges, resolvedNewSchema, options) {
   const classifyChange = options?.classifyFn ?? defaultClassify;
   const changes = rawChanges.map((raw) => ({
@@ -117939,7 +117958,7 @@ function diffJsonSchemaObjects(oldSchema, newSchema) {
 }
 __name(diffJsonSchemaObjects, "diffJsonSchemaObjects");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/linters/json-schema-rules.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/json-schema-rules.js
 var TYPE_SPECIFIC_KEYWORDS = {
   string: ["minLength", "maxLength", "pattern", "format"],
   number: ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
@@ -118627,7 +118646,7 @@ function walkSchema(schema, path15, root, visitor) {
 }
 __name(walkSchema, "walkSchema");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/linters/json-schema-ajv.js
 var AjvConstructor2 = import_ajv6.default.default ?? import_ajv6.default;
 var addFormatsFunc2 = import_ajv_formats3.default.default ?? import_ajv_formats3.default;
 async function lintJsonSchema(specPath, options = {}) {
@@ -118709,7 +118728,7 @@ async function lintJsonSchema(specPath, options = {}) {
 }
 __name(lintJsonSchema, "lintJsonSchema");
 
-// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.3/node_modules/@contractual/differs.openapi/dist/resolver.js
+// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.4/node_modules/@contractual/differs.openapi/dist/resolver.js
 async function resolveOpenApiSpec(specPath) {
   let bundle2;
   let loadConfig3;
@@ -118728,7 +118747,7 @@ async function resolveOpenApiSpec(specPath) {
 }
 __name(resolveOpenApiSpec, "resolveOpenApiSpec");
 
-// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.3/node_modules/@contractual/differs.openapi/dist/structural.js
+// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.4/node_modules/@contractual/differs.openapi/dist/structural.js
 var HTTP_METHODS = ["get", "put", "post", "delete", "patch", "options", "head", "trace"];
 function withSchemaDirection(changes, schemaDirection) {
   return changes.map((change) => ({ ...change, schemaDirection }));
@@ -118952,7 +118971,182 @@ function diffResponses(oldOp, newOp, basePath) {
 }
 __name(diffResponses, "diffResponses");
 
-// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.3/node_modules/@contractual/differs.openapi/dist/differ.js
+// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.4/node_modules/@contractual/differs.openapi/dist/property-addition.js
+var ANNOTATIONS = /* @__PURE__ */ new Set([
+  "title",
+  "description",
+  "default",
+  "examples",
+  "$comment",
+  "deprecated",
+  "readOnly",
+  "writeOnly",
+  "format",
+  "contentEncoding",
+  "contentMediaType",
+  "contentSchema"
+]);
+var INDEPENDENT_ASSERTIONS = /* @__PURE__ */ new Set([
+  "type",
+  "enum",
+  "const",
+  "minimum",
+  "maximum",
+  "exclusiveMinimum",
+  "exclusiveMaximum",
+  "multipleOf",
+  "minLength",
+  "maxLength",
+  "pattern",
+  "minItems",
+  "maxItems",
+  "uniqueItems",
+  "minProperties",
+  "maxProperties",
+  "required"
+]);
+var UNSUPPORTED_PARENT_KEYS = [
+  "$ref",
+  "propertyNames",
+  "dependentSchemas",
+  "dependentRequired",
+  "dependencies",
+  "unevaluatedProperties",
+  "unevaluatedItems"
+];
+function classifyPropertyAddition(change, oldUsesNullable, newUsesNullable, supportedDocumentDialects = true) {
+  const context3 = change.propertyAddition;
+  if (!context3 || !change.schemaDirection)
+    return "breaking";
+  if (!supportedDocumentDialects || oldUsesNullable !== newUsesNullable)
+    return "breaking";
+  if (context3.schemaDialects?.some((dialect) => oldUsesNullable || !supportedDialect(dialect)))
+    return "breaking";
+  const { name, oldParent, newParent } = context3;
+  if (context3.uncertain || UNSUPPORTED_PARENT_KEYS.some((key) => Object.hasOwn(oldParent, key) || Object.hasOwn(newParent, key)))
+    return "breaking";
+  const oldRequired = Array.isArray(oldParent.required) && oldParent.required.includes(name);
+  const newRequired = Array.isArray(newParent.required) && newParent.required.includes(name);
+  if (change.schemaDirection === "input" && newRequired && !oldRequired)
+    return "breaking";
+  const oldConstraints = matchingPatterns(oldParent.patternProperties, name);
+  const newConstraints = matchingPatterns(newParent.patternProperties, name);
+  if (!oldConstraints || !newConstraints)
+    return "breaking";
+  if (oldConstraints.length === 0)
+    oldConstraints.push(oldParent.additionalProperties ?? true);
+  newConstraints.push(change.newValue);
+  if ([...oldConstraints, ...newConstraints].some((schema) => containsUnsupportedDialect(schema, oldUsesNullable)))
+    return "breaking";
+  const compatible = change.schemaDirection === "input" ? implies(oldConstraints, newConstraints, oldUsesNullable) : implies(newConstraints, oldConstraints, oldUsesNullable);
+  return compatible ? "non-breaking" : "breaking";
+}
+__name(classifyPropertyAddition, "classifyPropertyAddition");
+function matchingPatterns(patterns, name) {
+  if (patterns === void 0)
+    return [];
+  if (!isSchemaObject(patterns))
+    return null;
+  try {
+    return Object.entries(patterns).filter(([pattern]) => new RegExp(pattern, "u").test(name)).map(([, schema]) => schema);
+  } catch {
+    return null;
+  }
+}
+__name(matchingPatterns, "matchingPatterns");
+function assertions(schema, usesNullable) {
+  if (!isSchemaObject(schema))
+    return schema;
+  const result = Object.fromEntries(Object.entries(schema).filter(([key]) => !ANNOTATIONS.has(key) && key !== "nullable" && key !== "$schema"));
+  if (usesNullable && schema.nullable === true && typeof schema.type === "string") {
+    result.type = [schema.type, "null"];
+  }
+  return result;
+}
+__name(assertions, "assertions");
+function unconstrained(schema) {
+  return schema === true || isSchemaObject(schema) && Object.keys(schema).length === 0;
+}
+__name(unconstrained, "unconstrained");
+function implies(source, target, usesNullable) {
+  const from = source.map((schema) => assertions(schema, usesNullable));
+  const to2 = target.map((schema) => assertions(schema, usesNullable));
+  if (from.includes(false))
+    return true;
+  return to2.every((constraint) => {
+    if (unconstrained(constraint))
+      return true;
+    if (!isSchemaObject(constraint))
+      return from.some((item) => deepEqual(item, constraint));
+    if (containsReference(constraint) || from.some((item) => containsReference(item)))
+      return false;
+    if (from.some((item) => deepEqual(item, constraint)))
+      return true;
+    return Object.entries(constraint).every(([key, value2]) => INDEPENDENT_ASSERTIONS.has(key) && from.some((item) => isSchemaObject(item) && Object.hasOwn(item, key) && (key === "type" ? typeImplies(item[key], value2) : deepEqual(item[key], value2))));
+  });
+}
+__name(implies, "implies");
+function typeImplies(source, target) {
+  const from = Array.isArray(source) ? source : [source];
+  const to2 = Array.isArray(target) ? target : [target];
+  return from.every((type) => to2.includes(type) || type === "integer" && to2.includes("number"));
+}
+__name(typeImplies, "typeImplies");
+function containsReference(value2, seen = /* @__PURE__ */ new Set()) {
+  if (typeof value2 !== "object" || value2 === null)
+    return false;
+  if (seen.has(value2))
+    return true;
+  seen.add(value2);
+  const found = Object.entries(value2).some(([key, child2]) => key === "$ref" || key === "$dynamicRef" || containsReference(child2, seen));
+  seen.delete(value2);
+  return found;
+}
+__name(containsReference, "containsReference");
+function supportedDialect(dialect) {
+  return typeof dialect === "string" && [
+    "https://spec.openapis.org/oas/3.1/dialect/base",
+    "https://json-schema.org/draft/2020-12/schema"
+  ].includes(dialect.replace(/#$/, ""));
+}
+__name(supportedDialect, "supportedDialect");
+function containsUnsupportedDialect(value2, usesNullable, seen = /* @__PURE__ */ new Set()) {
+  if (!isSchemaObject(value2))
+    return false;
+  if (seen.has(value2))
+    return true;
+  if (Object.hasOwn(value2, "$schema") && (usesNullable || !supportedDialect(value2.$schema)))
+    return true;
+  seen.add(value2);
+  const singleSchemas = [
+    "additionalProperties",
+    "unevaluatedProperties",
+    "propertyNames",
+    "items",
+    "contains",
+    "additionalItems",
+    "unevaluatedItems",
+    "not",
+    "if",
+    "then",
+    "else"
+  ].flatMap((key) => Array.isArray(value2[key]) ? value2[key] : [value2[key]]);
+  const schemaArrays = ["allOf", "anyOf", "oneOf", "prefixItems"].flatMap((key) => Array.isArray(value2[key]) ? value2[key] : []);
+  const schemaMaps = [
+    "properties",
+    "patternProperties",
+    "$defs",
+    "definitions",
+    "dependentSchemas",
+    "dependencies"
+  ].flatMap((key) => isSchemaObject(value2[key]) ? Object.values(value2[key]) : []);
+  const found = [...singleSchemas, ...schemaArrays, ...schemaMaps].some((schema) => containsUnsupportedDialect(schema, usesNullable, seen));
+  seen.delete(value2);
+  return found;
+}
+__name(containsUnsupportedDialect, "containsUnsupportedDialect");
+
+// node_modules/.pnpm/@contractual+differs.openapi@0.1.0-beta.4/node_modules/@contractual/differs.openapi/dist/differ.js
 async function diffOpenApi(oldSpecPath, newSpecPath) {
   const oldSpec = await resolveOpenApiSpec(oldSpecPath);
   const newSpec = await resolveOpenApiSpec(newSpecPath);
@@ -118961,10 +119155,15 @@ async function diffOpenApi(oldSpecPath, newSpecPath) {
 __name(diffOpenApi, "diffOpenApi");
 function diffOpenApiObjects(oldSpec, newSpec) {
   const rawChanges = diffStructural(oldSpec, newSpec);
-  return assembleResult(rawChanges, newSpec, { classifyFn: classifyOpenApiChange });
+  const oldUsesNullable = typeof oldSpec.openapi === "string" && oldSpec.openapi.startsWith("3.0.");
+  const newUsesNullable = typeof newSpec.openapi === "string" && newSpec.openapi.startsWith("3.0.");
+  const supportedDocumentDialects = [oldSpec, newSpec].every((spec2) => !Object.hasOwn(spec2, "jsonSchemaDialect") || supportedDialect(spec2.jsonSchemaDialect));
+  return assembleResult(rawChanges, newSpec, {
+    classifyFn: /* @__PURE__ */ __name((change, schema) => classifyOpenApiChange(change, schema, oldUsesNullable, newUsesNullable, supportedDocumentDialects), "classifyFn")
+  });
 }
 __name(diffOpenApiObjects, "diffOpenApiObjects");
-function classifyOpenApiChange(change, newSpec) {
+function classifyOpenApiChange(change, newSpec, oldUsesNullable, newUsesNullable, supportedDocumentDialects) {
   if (change.enumConstraintEquivalent)
     return "non-breaking";
   if (change.type.startsWith("enum-") && /\/oneOf\/\d+\//.test(change.path)) {
@@ -118988,13 +119187,15 @@ function classifyOpenApiChange(change, newSpec) {
     }
   }
   if (change.type === "property-added") {
+    if (change.propertyAddition)
+      return classifyPropertyAddition(change, oldUsesNullable, newUsesNullable, supportedDocumentDialects);
     return classifyPropertyAdded(change, newSpec);
   }
   return classify(change);
 }
 __name(classifyOpenApiChange, "classifyOpenApiChange");
 
-// node_modules/.pnpm/@contractual+governance@0.1.0-beta.3/node_modules/@contractual/governance/dist/index.js
+// node_modules/.pnpm/@contractual+governance@0.1.0-beta.4/node_modules/@contractual/governance/dist/index.js
 init_runner();
 function registerAllEngines() {
   registerLinter("openapi", lintOpenAPI);
@@ -119005,10 +119206,10 @@ function registerAllEngines() {
 __name(registerAllEngines, "registerAllEngines");
 registerAllEngines();
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/utils/files.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/utils/files.js
 __toESM(require_dist(), 1);
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/changesets/naming.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/changesets/naming.js
 var ADJECTIVES = [
   "brave",
   "calm",
@@ -119092,7 +119293,7 @@ function generateChangesetName() {
 }
 __name(generateChangesetName, "generateChangesetName");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/changesets/create.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/changesets/create.js
 var SEVERITY_LABELS = {
   breaking: "BREAKING",
   "non-breaking": "minor",
@@ -119149,7 +119350,7 @@ ${body}
 }
 __name(createChangeset, "createChangeset");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/changesets/read.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/changesets/read.js
 var import_yaml2 = __toESM(require_dist(), 1);
 var VALID_BUMP_TYPES = ["major", "minor", "patch"];
 var ChangesetParseError = class extends Error {
@@ -119228,7 +119429,7 @@ async function readChangesets(changesetsDir) {
 }
 __name(readChangesets, "readChangesets");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/changesets/consume.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/changesets/consume.js
 var BUMP_PRIORITY = {
   major: 3,
   minor: 2,
@@ -119288,7 +119489,7 @@ function escapeRegex(str) {
 }
 __name(escapeRegex, "escapeRegex");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/versioning/manager.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/versioning/manager.js
 var semver = __toESM(require_semver2(), 1);
 var DEFAULT_VERSION = "0.0.0";
 var SPEC_EXTENSIONS = [".yaml", ".yml", ".json"];
@@ -119537,7 +119738,7 @@ ${existingContent}`;
 }
 __name(appendChangelog, "appendChangelog");
 
-// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.2/node_modules/@contractual/changesets/dist/versioning/spec-updater.js
+// node_modules/.pnpm/@contractual+changesets@0.1.0-beta.3/node_modules/@contractual/changesets/dist/versioning/spec-updater.js
 var import_yaml3 = __toESM(require_dist(), 1);
 var VERSION_FIELD_PATHS = {
   openapi: ["info", "version"],
@@ -119625,7 +119826,7 @@ function updateSpecVersion(specPath, newVersion, contractType) {
 }
 __name(updateSpecVersion, "updateSpecVersion");
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/utils/files.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/utils/files.js
 var CONTRACTUAL_DIR = ".contractual";
 function findContractualDir(startDir = process.cwd()) {
   let currentDir = path9.resolve(startDir);
@@ -119660,7 +119861,7 @@ function getSnapshotPath(contractName, contractualDir) {
 }
 __name(getSnapshotPath, "getSnapshotPath");
 
-// node_modules/.pnpm/@contractual+cli@0.1.0-beta.3_@types+node@20.19.39/node_modules/@contractual/cli/dist/core/diff.js
+// node_modules/.pnpm/@contractual+cli@0.1.0-beta.4_@types+node@20.19.39/node_modules/@contractual/cli/dist/core/diff.js
 async function diffContracts(config, options = {}) {
   const contractualDir = findContractualDir(config.configDir);
   if (!contractualDir) {
