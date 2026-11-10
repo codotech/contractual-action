@@ -36,10 +36,10 @@ importers:
     devDependencies:
       '@contractual/cli':
         specifier: beta
-        version: 0.1.0-beta.3(@types/node@20.19.39)
+        version: 0.1.0-beta.4(@types/node@20.19.39)
       '@contractual/governance':
         specifier: beta
-        version: 0.1.0-beta.3
+        version: 0.1.0-beta.4
       '@types/node':
         specifier: ^20.11.0
         version: 20.19.39
@@ -89,33 +89,33 @@ packages:
     resolution: {integrity: sha512-v+oN26xP4YIlQsbQ/CbTH1WG5m/l/DjKKZNy/Kp3f/AFvbgt7Em/D0FeMM3O2hX0YzeN2M16W8lOpyhIkfCBcQ==}
     engines: {node: '>=6.9.0'}
 
-  '@contractual/changesets@0.1.0-beta.2':
-    resolution: {integrity: sha512-ID2SpC8ahaDAjBNoNQxEnPCXLEWdu9nEFdvHw/PCdS+NQgeTbK6T7/4fZiG5CJDnr+L5ITfODiNVtY3dJTFpdQ==}
+  '@contractual/changesets@0.1.0-beta.3':
+    resolution: {integrity: sha512-mH/ZJIPv0sDSqGNqVY+608UE9Falo8Z2C2CUQKotaW2QXpZ9W7EuOr8Ff/HK8cg5VEUIdtKz9MOx1ukjB6omQQ==}
     engines: {node: '>=22.0.0'}
 
-  '@contractual/cli@0.1.0-beta.3':
-    resolution: {integrity: sha512-i9to5wF1y1hZ1YDeKFFvPzz6IONO8PH/sAorefanrwxkdl3AS267Eyru6XdHlxNkX+VQmkAt6rTlOPxfLPUBhg==}
+  '@contractual/cli@0.1.0-beta.4':
+    resolution: {integrity: sha512-IjyINCx4VRcxXlxgoL7D5I2CSyPQW97WhK/wwlTYzzLXswrOWl/BfEHuc8X6rbJmjAEuE30jE58z+WSnkBgRQw==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
-  '@contractual/differs.core@0.1.0-beta.2':
-    resolution: {integrity: sha512-6k+w1wDLYrjUQDlW/QQ3RvxoW//okd7gRN0w94oHErHeetW6+05YcUBGTBhJ0trPPN88I1ZpNdclIlquNST3Hw==}
+  '@contractual/differs.core@0.1.0-beta.3':
+    resolution: {integrity: sha512-YZUGJFKggZ7u3nnlJVSvhRxRYEbcTdBjjG1fC1DLFtEnCeyi8dsmsgloeufmSreXkS+0BwDBNfC5hRmjEnu+yQ==}
     engines: {node: '>=22.0.0'}
 
-  '@contractual/differs.json-schema@0.1.0-beta.3':
-    resolution: {integrity: sha512-dzheARgbCvFL5XZ5Nr7mNFA8243+n5gDDfabN5m4+QJu8z5uF7atCWy+BwEoade3y/J5RhJ3cfWwNkvKOEVf2A==}
+  '@contractual/differs.json-schema@0.1.0-beta.4':
+    resolution: {integrity: sha512-SGziaiJIXjkesf8EKGDakCUYF1wtD9wKObFJoHT7jexJVGNGwJZ+EL+SrRG7lkr5iD004v5KbwCfU5CPZXbgbA==}
     engines: {node: '>=22.0.0'}
 
-  '@contractual/differs.openapi@0.1.0-beta.3':
-    resolution: {integrity: sha512-ZMxczWATWeg6C/Ng+khOZhc1o9s1p8nZro/W45d0QarlaNVM2UuRYx9ElBbJjl9qNaYSYMWxK2zmdg0VI4ts5g==}
+  '@contractual/differs.openapi@0.1.0-beta.4':
+    resolution: {integrity: sha512-+NMUh1UuF9NrAUxCJiOqfYGMy8NH2sw20MnU03JhKD11VAPlP7HzYGg6XxbLPN8+YiWhV4EFk44abuLkiu01QQ==}
     engines: {node: '>=22.12.0'}
 
-  '@contractual/governance@0.1.0-beta.3':
-    resolution: {integrity: sha512-5oYwc+1qpNzzVJ2yF92IHIh7ltOqP+Xj1pnxXf3VCBAn0qQTLPGIH3leSgyhzCIdFvApi3wnwL59/b5TLWucAA==}
+  '@contractual/governance@0.1.0-beta.4':
+    resolution: {integrity: sha512-1hyz1FOQjqeDWFnXj9IJw9wi8mmBCHn3KhQUo5g63qnQ1X2ljWlS9NnRicJqQBIi84fQ0FgGP7mBWeXf4Apszw==}
     engines: {node: '>=22.12.0'}
 
-  '@contractual/types@0.1.0-beta.2':
-    resolution: {integrity: sha512-MleODSghSR95Qxem7ZceZSm15AvNLTJZxU2PMqVIkL8qDRI6pSmBZWDNaxOoYjE4u0j+Gr5NXANGmuT+KOFY4w==}
+  '@contractual/types@0.1.0-beta.3':
+    resolution: {integrity: sha512-KAIjkupIYuTo/Yi0aZRO41navM2iesy3/ZtnzjhJelm21NHI83SwAg7VUMiXsm7YV9Weq8IuXXQIooRSlqLmPg==}
     engines: {node: '>=22.0.0'}
 
   '@esbuild/aix-ppc64@0.28.1':
@@ -1361,17 +1361,17 @@ snapshots:
 
   '@babel/runtime@7.29.13': {}
 
-  '@contractual/changesets@0.1.0-beta.2':
+  '@contractual/changesets@0.1.0-beta.3':
     dependencies:
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/types': 0.1.0-beta.3
       semver: 7.8.6
       yaml: 2.9.1
 
-  '@contractual/cli@0.1.0-beta.3(@types/node@20.19.39)':
+  '@contractual/cli@0.1.0-beta.4(@types/node@20.19.39)':
     dependencies:
-      '@contractual/changesets': 0.1.0-beta.2
-      '@contractual/governance': 0.1.0-beta.3
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/changesets': 0.1.0-beta.3
+      '@contractual/governance': 0.1.0-beta.4
+      '@contractual/types': 0.1.0-beta.3
       '@inquirer/prompts': 8.7.5(@types/node@20.19.39)
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
@@ -1383,30 +1383,30 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@contractual/differs.core@0.1.0-beta.2':
+  '@contractual/differs.core@0.1.0-beta.3':
     dependencies:
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/types': 0.1.0-beta.3
 
-  '@contractual/differs.json-schema@0.1.0-beta.3':
+  '@contractual/differs.json-schema@0.1.0-beta.4':
     dependencies:
-      '@contractual/differs.core': 0.1.0-beta.2
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/differs.core': 0.1.0-beta.3
+      '@contractual/types': 0.1.0-beta.3
 
-  '@contractual/differs.openapi@0.1.0-beta.3':
+  '@contractual/differs.openapi@0.1.0-beta.4':
     dependencies:
-      '@contractual/differs.core': 0.1.0-beta.2
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/differs.core': 0.1.0-beta.3
+      '@contractual/types': 0.1.0-beta.3
       '@redocly/openapi-core': 2.76.0
 
-  '@contractual/governance@0.1.0-beta.3':
+  '@contractual/governance@0.1.0-beta.4':
     dependencies:
-      '@contractual/differs.json-schema': 0.1.0-beta.3
-      '@contractual/differs.openapi': 0.1.0-beta.3
-      '@contractual/types': 0.1.0-beta.2
+      '@contractual/differs.json-schema': 0.1.0-beta.4
+      '@contractual/differs.openapi': 0.1.0-beta.4
+      '@contractual/types': 0.1.0-beta.3
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
 
-  '@contractual/types@0.1.0-beta.2': {}
+  '@contractual/types@0.1.0-beta.3': {}
 
   '@esbuild/aix-ppc64@0.28.1':
     optional: true
